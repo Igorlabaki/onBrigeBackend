@@ -1,0 +1,207 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider          = "mysql"
+  relationMode      = "prisma"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATA_BASE_URL")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  expireIn  Int
+  userId    String?  @unique
+  companyId String?  @unique
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_token")
+}
+
+model User {
+  id                    String               @id @default(cuid())
+  name                  String
+  email                 String               @unique
+  password              String
+  avatar                String?
+  emailVerified         DateTime?            @map("email_verified")
+  created_at            DateTime             @default(now())
+  userType              String?
+  about                 String?              @db.Text
+  Skills                UsersSkills[]
+  Country               Country?             @relation(fields: [countryId], references: [id])
+  countryId             String?
+  City                  City?                @relation(fields: [cityId], references: [id])
+  cityId                String?
+  LocationInteresting   LocationInteresting? @relation(fields: [locationInterestingId], references: [id])
+  locationInterestingId String?
+  Link                  Link[]
+  UsersJobs             UsersJobs[]
+  refresh_token         RefreshToken[]
+  Area                  Area?                @relation(fields: [areaId], references: [id])
+  areaId                String?
+  level                 level?               @relation(fields: [levelId], references: [id])
+  levelId               String?
+
+  @@index([areaId])
+  @@index([cityId])
+  @@index([levelId])
+  @@index([countryId])
+  @@index([locationInterestingId])
+  @@map("users")
+}
+
+model Company {
+  id            String         @id @default(cuid())
+  name          String
+  password      String
+  email         String         @unique
+  Country       Country?       @relation(fields: [countryId], references: [id])
+  countryId     String?
+  City          City?          @relation(fields: [cityId], references: [id])
+  cityId        String?
+  Jobs          Job[]
+  about         String?        @db.Text
+  userType      String?
+  created_at    DateTime       @default(now())
+  emailVerified DateTime?      @map("email_verified")
+  avatar        String?
+  refresh_token RefreshToken[]
+
+  @@index([cityId])
+  @@index([countryId])
+}
+
+model Job {
+  id                 String       @id @default(cuid())
+  created_at         DateTime     @default(now())
+  areaId             String?
+  Company            Company?     @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId          String?
+  about              String?      @db.Text
+  Skills             JobsSkills[]
+  area               Area?        @relation(fields: [areaId], references: [id])
+  period             Period?      @relation(fields: [periodId], references: [id])
+  periodId           String?
+  level              level?       @relation(fields: [levelId], references: [id])
+  levelId            String?
+  Country            Country?     @relation(fields: [countryId], references: [id])
+  countryId          String?
+  City               City?        @relation(fields: [cityId], references: [id])
+  cityId             String?
+  minimumPercentagem String?
+  UsersJobs          UsersJobs[]
+
+  @@index([companyId])
+  @@index([areaId])
+  @@index([periodId])
+  @@index([levelId])
+  @@index([countryId])
+  @@index([cityId])
+}
+
+model UsersSkills {
+  skill       Skill    @relation(fields: [fk_id_skill], references: [id])
+  fk_id_skill String
+  user        User     @relation(fields: [fk_id_user], references: [id])
+  fk_id_user  String
+  created_at  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@id([fk_id_skill, fk_id_user])
+  @@index([fk_id_user])
+  @@index([fk_id_skill])
+  @@map("usersSkills")
+}
+
+model UsersJobs {
+  job        Job      @relation(fields: [fk_id_job], references: [id])
+  fk_id_job  String
+  user       User     @relation(fields: [fk_id_user], references: [id])
+  fk_id_user String
+  created_at DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([fk_id_job, fk_id_user])
+  @@index([fk_id_job])
+  @@index([fk_id_user])
+  @@map("usersJobs")
+}
+
+model JobsSkills {
+  skill       Skill    @relation(fields: [fk_id_skill], references: [id])
+  fk_id_skill String
+  job         Job      @relation(fields: [fk_id_job], references: [id])
+  fk_id_job   String
+  created_at  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@id([fk_id_skill, fk_id_job])
+  @@index([fk_id_job])
+  @@index([fk_id_skill])
+  @@map("jobSkills")
+}
+
+model Skill {
+  id    String        @id @default(cuid())
+  name  String        @unique
+  Users UsersSkills[]
+  Jobs  JobsSkills[]
+}
+
+model Country {
+  id      String    @id @default(cuid())
+  name    String    @unique
+  user    User[]
+  Company Company[]
+  job     Job[]
+}
+
+model City {
+  id      String    @id @default(cuid())
+  name    String    @unique
+  user    User[]
+  Company Company[]
+  job     Job[]
+}
+
+model LocationInteresting {
+  id   String @id @default(cuid())
+  name String @unique
+  user User[]
+}
+
+model Link {
+  id         String @id @default(cuid())
+  name       String @unique
+  user       User   @relation(fields: [fk_id_user], references: [id])
+  fk_id_user String
+
+  @@index([fk_id_user])
+}
+
+model Area {
+  id    String @id @default(cuid())
+  name  String @unique
+  jobs  Job[]
+  users User[]
+}
+
+model Period {
+  id   String @id @default(cuid())
+  name String @unique
+  jobs Job[]
+}
+
+model level {
+  id    String @id @default(cuid())
+  name  String @unique
+  jobs  Job[]
+  users User[]
+}

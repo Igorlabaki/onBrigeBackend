@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `Company` ADD COLUMN `areaId` VARCHAR(191) NULL,
+    ADD COLUMN `levelId` VARCHAR(191) NULL,
+    ADD COLUMN `periodId` VARCHAR(191) NULL;
