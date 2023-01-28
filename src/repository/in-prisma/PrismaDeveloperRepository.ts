@@ -39,13 +39,13 @@ export class PrismaDeveloperRepository implements IDeveloperRepository {
     })
   }
 
-  async updateInfos({email,name,id,bio,cityName,countryName,level,area}: IUpdateDeveloperInfoRequest){
+  async updateInfos({email,name,developerId,about,cityName,countryName,level,area}: IUpdateDeveloperInfoRequest){
     return await this.prisma.user.update({
       where:{
-        id
+       id:developerId
       },
       data:{
-        bio,
+        about,
         email,
         name,
         City: {
@@ -97,6 +97,8 @@ export class PrismaDeveloperRepository implements IDeveloperRepository {
             }
         },
         City: true,
+        level: true,
+        Area: true,
         Country: true,
         Link: true,
         UsersJobs:{

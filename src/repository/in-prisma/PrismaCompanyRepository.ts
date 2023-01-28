@@ -22,10 +22,10 @@ export class PrismaCompanyRepository implements ICompanyRepository {
     })
   }
 
-  async updateInfos({email,name,id,cityName,countryName,about}: IUpdateInfoCompanyRequest){
+  async updateInfos({email,name,companyId,cityName,countryName,about}: IUpdateInfoCompanyRequest){
     return await this.prisma.company.update({
       where:{
-        id
+        id: companyId
       },
       data:{
         about,
@@ -94,6 +94,7 @@ export class PrismaCompanyRepository implements ICompanyRepository {
       include:{
         Jobs:{
             include:{
+            Company:true,
             Skills:{
                 include:{
                 skill: true

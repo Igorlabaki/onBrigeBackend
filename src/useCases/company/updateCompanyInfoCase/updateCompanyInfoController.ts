@@ -6,10 +6,10 @@ class UpdateCompanyInfoController {
 
 
     async handle(resq: Request, resp: Response){
-        const {email,name,id,cityName,countryName,about} = resq.body
+        const {email,name,companyId,cityName,countryName,about} = resq.body
 
         const companyUpdated = await this.updateCompanyInfoCase.execute(
-           {email,name,id,cityName,countryName,about}
+           {email,name,companyId,cityName,countryName,about}
         )
 
         return resp.json(companyUpdated)

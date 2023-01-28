@@ -6,10 +6,10 @@ class UpdateDeveloperInfoController {
     constructor(private updateDeveloperInfoCase: UpdateDeveloperInfoCase){}
 
     async handle(resq: Request, resp: Response){
-        const {email,bio,name,id,cityName,countryName,area,level} = resq.body
+        const {email,about,name,developerId,cityName,countryName,area,level} = resq.body
 
         const developerUpdated = await this.updateDeveloperInfoCase.execute(
-           {email,bio,name,id,cityName,countryName,area,level}
+           {email,about,name,developerId,cityName,countryName,area,level}
         )
 
         return resp.json(developerUpdated)

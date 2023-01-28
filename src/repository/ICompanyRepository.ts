@@ -8,7 +8,7 @@ export interface ICreateNewCompanyAccount{
 }
 
 export interface IUpdateInfoCompanyRequest{
-    id          : string
+    companyId          : string
     name        : string
     email       : string
     about         : string           
@@ -27,7 +27,7 @@ interface ICompanyRepository {
     delete: (reference: string) => Promise<Company  | null> 
     updateAvatar: (avatarUrl: string, companyId: string) => Promise<Company| null>
     getByEmail:(reference: string) =>  Promise< Company | null>
-    updateInfos: ({email,about,name,id}: IUpdateInfoCompanyRequest) => Promise<Company| null>
+    updateInfos: ({email,about,name,companyId,cityName,countryName}: IUpdateInfoCompanyRequest) => Promise<Company| null>
     updatePassword: ({id,password}:IUpdateCompanyPasswordRequest) => Promise<Company| null>
     create:({email,password,userType,name}:ICreateNewCompanyAccount) => Promise<Company | null>
 }

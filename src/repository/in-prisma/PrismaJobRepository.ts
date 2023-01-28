@@ -1,6 +1,6 @@
 
 import { Job, PrismaClient } from "@prisma/client";
-import { ICreateNewJob, IJobRepository } from "../IJobRepository";
+import { ICreateNewJob, IJobRepository, IUpdatejob } from "../IJobRepository";
 
 export class PrismaJobRepository implements IJobRepository {
 
@@ -59,6 +59,43 @@ export class PrismaJobRepository implements IJobRepository {
        period: true,
        Skills: true,
        UsersJobs: true
+      }
+    })
+  }
+
+  async update({about,area,cityName,countryName,companyId,level,minimumPercentagem,period,jobId}: IUpdatejob): Promise<Job> {
+    return await this.prisma.job.update({
+      where:{
+        id: jobId
+      },
+      data:{
+        area: {
+          connect:{
+            name: area
+          }
+        },
+        City:{
+          connect:{
+            name: cityName
+          }
+        },
+        about,
+        Country:{
+          connect:{
+            name:countryName
+          }
+        },
+        level:{
+          connect:{
+            name: level
+          }
+        },
+        period:{
+          connect:{
+            name: period
+          }
+        },
+        minimumPercentagem
       }
     })
   }

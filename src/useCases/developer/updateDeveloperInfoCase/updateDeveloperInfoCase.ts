@@ -15,15 +15,15 @@ class UpdateDeveloperInfoCase{
         private developerRepository : IDeveloperRepository,
     ){}
 
-    async execute({email,bio,name,id,cityName,countryName,area,level}:IUpdateDeveloperInfoRequest){
-        await validateIfEntityExistsById(this.developerRepository,"Developer",id)
+    async execute({email,about,name,developerId,cityName,countryName,area,level}:IUpdateDeveloperInfoRequest){
+        await validateIfEntityExistsById(this.developerRepository,"Developer",developerId)
 
         await validateIfElementExistsAtBd(this.areaRepository,area)
         await validateIfElementExistsAtBd(this.levelRepository,level)
         await validateIfElementExistsAtBd(this.cityRepository,cityName)
         await validateIfElementExistsAtBd(this.countryRepository,countryName)
  
-        const updateDveloper = await this.developerRepository.updateInfos({email,bio,name,id,cityName,countryName,area,level})
+        const updateDveloper = await this.developerRepository.updateInfos({email,about,name,developerId,cityName,countryName,area,level})
 
         return updateDveloper
     }

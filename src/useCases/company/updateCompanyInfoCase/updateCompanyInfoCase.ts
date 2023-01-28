@@ -11,13 +11,14 @@ class UpdateCompanyInfoCase{
         private companyRepository : ICompanyRepository,
     ){}
 
-    async execute({email,name,id,cityName,countryName,about}:IUpdateInfoCompanyRequest){
-        await validateIfEntityExistsById(this.companyRepository,"Company",id)
+    async execute({email,name,companyId,cityName,countryName,about}:IUpdateInfoCompanyRequest){
+        
+        await validateIfEntityExistsById(this.companyRepository,"Company",companyId)
 
         await validateIfElementExistsAtBd(this.cityRepository,cityName)
         await validateIfElementExistsAtBd(this.countryRepository,countryName)
  
-        const updateDveloper = await this.companyRepository.updateInfos({email,name,id,cityName,countryName,about})
+        const updateDveloper = await this.companyRepository.updateInfos({email,name,companyId,cityName,countryName,about})
 
         return updateDveloper
     }

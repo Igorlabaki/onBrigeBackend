@@ -10,8 +10,8 @@ export interface ICreateNewDeveloperAccount{
 }
 
 export interface IUpdateDeveloperInfoRequest{
-    id          : string;
-    bio         : string;  
+    developerId          : string;
+    about         : string;  
     area        : string;
     level       : string;    
     email       : string;
@@ -41,7 +41,7 @@ interface IDeveloperRepository {
     delete: (reference: string) => Promise<User  | null> 
     getById:(reference: string) => Promise<User | null>
     getByEmail:(reference: string) => Promise<User | null>
-    updateInfos: ({email,bio,name,id,cityName,countryName,level,area}: IUpdateDeveloperInfoRequest) => Promise<User| null>
+    updateInfos: ({email,about,name,developerId,cityName,countryName,level,area}: IUpdateDeveloperInfoRequest) => Promise<User| null>
     updatePassword: ({id,password}:IUpdateDeveloperPasswordRequest) => Promise<User| null>
     create:({email,password,name,userType}: ICreateNewDeveloperAccount) => Promise<User | null>
 }

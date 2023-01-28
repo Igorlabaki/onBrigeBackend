@@ -3,10 +3,10 @@ import { CreateNewJobCase } from "./createNewJobCase";
 import { CreateNewJobController } from "./createNewJobController";
 import { PrismaJobRepository } from "../../../repository/in-prisma/PrismaJobRepository";
 import { PrismaAreaRepository } from "../../../repository/in-prisma/PrismaAreaRepository";
+import { PrismaCityRepository } from "../../../repository/in-prisma/PrismaCityRepository";
 import { PrismaLevelRepository } from "../../../repository/in-prisma/PrismaLevelRepository";
 import { PrismaPeriodRepository } from "../../../repository/in-prisma/PrismaPeriodRepository";
 import { PrismaCountryRepository } from "../../../repository/in-prisma/PrismaCountryRepository";
-import { PrismaCityRepository } from "../../../repository/in-prisma/PrismaCityRepository";
 
 export const createNewJobFactory = () => {
   const prismaJobRepository         = new PrismaJobRepository(client);
