@@ -6,7 +6,6 @@ class GetDeveloperByIdController {
 
   async handle(req: Request, resp: Response){
     const {developerId} = req.params
-
     const developer = await this.getDeveloperByIdCase.execute(developerId)
 
     return resp.json(developer)

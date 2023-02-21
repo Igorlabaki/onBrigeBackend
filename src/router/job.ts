@@ -5,6 +5,8 @@ import { getJobByIdFactory } from "../useCases/job/getJobByIdCase/getJobByIdFact
 import { deleteJobByIdFactory } from "../useCases/job/deleteJobById/getJobByIdFactory"
 import { createNewJobFactory } from "../useCases/job/createNewJobCase/createNewJobFactory"
 import { updateJobByIdFactory } from "../useCases/job/updateJobCase/updateJobByIdFactory"
+import { developerAppliedFactory } from "../useCases/job/developerApply/developerAppliedFactory"
+import { developerDismissFactory } from "../useCases/job/developerDismissApply/developerDismissFactory"
 
 const jobRoutes = Router()
 
@@ -38,5 +40,18 @@ jobRoutes.delete("/delete/:id",ensureAutheticate, (request,response) => {
     return  deleteJobByIdFactory().handle(request,response)
 })
 //
+
+// Developer Applied
+jobRoutes.put("/developerApplied",ensureAutheticate, (request,response) => {
+    return  developerAppliedFactory().handle(request,response)
+})
+//
+
+// Developer Applied
+jobRoutes.delete("/developerDismiss/:jobId/:developerId",ensureAutheticate, (request,response) => {
+    return  developerDismissFactory().handle(request,response)
+})
+//
+
 
 export {jobRoutes}

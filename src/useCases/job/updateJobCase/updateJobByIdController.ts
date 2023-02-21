@@ -6,14 +6,14 @@ class UpdateJobByIdController {
   constructor(private updateJobByIdCase: UpdateJobByIdCase) {}
 
   async handle(req: Request, resp: Response){
-    const {area,level,about,period,cityName,companyId,countryName,minimumPercentagem,jobId} = req.body
+    const {area,level,about,period,cityName,companyId,countryName,minimumPercentagem,jobId,skills} = req.body
     
     const job = await this.updateJobByIdCase.execute(
-      {area,level,about,period,cityName,companyId,countryName,minimumPercentagem,jobId}
+      {area,level,about,period,cityName,companyId,countryName,minimumPercentagem,jobId,skills}
     )
 
     return resp.json(job)
   }
 }
 
-export {UpdateJobByIdController}
+export {UpdateJobByIdController}  

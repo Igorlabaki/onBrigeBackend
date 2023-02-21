@@ -17,7 +17,7 @@ class CreateNewJobCase {
         private periodRepository: IPeriodRepository
     ){}
 
-    async execute({about,area,cityName,companyId,countryName,level,minimumPercentagem,period}: ICreateNewJob ){
+    async execute({about,area,cityName,companyId,countryName,level,minimumPercentagem,period,skills}: ICreateNewJob ){
         // Validate input
             validateInputs([!!about,!!area,!!cityName,!!companyId,
                 !!countryName,!!level,!!minimumPercentagem,!!period])
@@ -30,10 +30,10 @@ class CreateNewJobCase {
             await validateIfElementExistsAtBd(this.cityRepository, cityName)
             await validateIfElementExistsAtBd(this.countryRepository,countryName)           
         //
-
+               
         // Create new Job
             const jobInput : ICreateNewJob = {
-                about,area,cityName,companyId,countryName,level,minimumPercentagem,period
+                about,area,cityName,companyId,countryName,level,minimumPercentagem,period,skills
             }
 
             const newJob = await this.jobRepository.create(jobInput)

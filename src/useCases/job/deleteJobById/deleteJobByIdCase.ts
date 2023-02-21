@@ -6,7 +6,7 @@ class DeleteJobByIdCase {
 
   async execute(jobId: string){
     const job = await validateIfEntityExistsById(this.jobRepository,"Job",jobId)
-
+    
     const deletedJob = await this.jobRepository.delete(jobId)
 
     return {deletedJob}

@@ -17,9 +17,9 @@ class UpdateJobByIdCase {
     private countryRepository: ICountryRepository
   ) {}
 
-  async execute({area,level,about,period,cityName,companyId,countryName,minimumPercentagem,jobId}: IUpdatejob){
+  async execute({area,level,about,period,cityName,companyId,countryName,minimumPercentagem,jobId,skills}: IUpdatejob){
     const job = await validateIfEntityExistsById(this.jobRepository,"Job",jobId)
-    
+   
     // Validate if record exists on bd
     await validateIfElementExistsAtBd(this.areaRepository,area)
     await validateIfElementExistsAtBd(this.levelRepositoryL,level)
@@ -30,7 +30,7 @@ class UpdateJobByIdCase {
 
     // Create new Job
     const jobInput : IUpdatejob = {
-      about,area,cityName,companyId,countryName,level,minimumPercentagem,period,jobId
+      about,area,cityName,companyId,countryName,level,minimumPercentagem,period,jobId,skills
     }
 
     const updatedJob = await this.jobRepository.update(jobInput)

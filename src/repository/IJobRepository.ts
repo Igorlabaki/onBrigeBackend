@@ -1,4 +1,4 @@
-import { Job, JobsSkills } from "@prisma/client"
+import { Job, JobsSkills, Skill } from "@prisma/client"
 
 export interface ICreateNewJob{
     area: string;
@@ -9,7 +9,7 @@ export interface ICreateNewJob{
     companyId: string;
     countryName: string;
     minimumPercentagem: string;
-    /*   skills:  JobsSkills[]; */
+    skills:  (string | undefined)[]
 }
 export interface IUpdatejob{
     area: string;
@@ -21,15 +21,26 @@ export interface IUpdatejob{
     companyId: string;
     countryName: string;
     minimumPercentagem: string;
-  /*   skills:  JobsSkills[]; */
+  skills:  JobsSkills[]; 
+}
+
+export interface IUpdateJobListSkillsRequest{
+    jobId : string;
+    listSkills    : Skill[];
+}
+export interface IAppliedDeveloper{
+    jobId : string;
+    developerId    : string;
 }
 
 interface IJobRepository {
     list:   () => Promise<Job[]>
     getById:(reference: string) => Promise<Job | null>
     delete: (reference: string) => Promise<Job  | null> 
+    developerApplied: ({jobId,developerId}: IAppliedDeveloper) => Promise<any | null>
+    developerDismiss: ({jobId,developerId}: IAppliedDeveloper) => Promise<any | null>
     update:({about,area,cityName,companyId,countryName,level,minimumPercentagem,period}: IUpdatejob) => Promise<Job | null>
-    create:({area,companyId,about,level,period,cityName,countryName,minimumPercentagem}:ICreateNewJob) => Promise<Job | null>
+    create:({area,companyId,about,level,period,cityName,countryName,minimumPercentagem,skills}:ICreateNewJob) => Promise<Job | null>
 }
 
 export { IJobRepository };

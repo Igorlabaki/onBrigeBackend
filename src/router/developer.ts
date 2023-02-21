@@ -3,6 +3,8 @@ import { ensureAutheticate } from "../middleware/ensureAuthenticate"
 import { getDeveloperByIdFactory } from "../useCases/developer/getDeveloperByIdCase.ts/getDeveloperByIdFactory"
 import { updateDeveloperInfoFactory } from "../useCases/developer/updateDeveloperInfoCase/updateDeveloperInfoFactory"
 import { listDeveloperAccountsFactory } from "../useCases/developer/listDeveloperAccountsCase/listDeveloperAccountsFactory"
+import { updateDeveloperAvatarFactory } from "../useCases/developer/updateDveloperAvatarCase/updateCompanyAvatarFactory"
+import { updateDeveloperSkillsFactory } from "../useCases/developer/updateUserSkillsCase/updateCompanySkillsFactory"
 
 const developerRoutes = Router()
 
@@ -13,7 +15,7 @@ const developerRoutes = Router()
 //
 
 // Get developer by id.
-    developerRoutes.get("/getById/:id",ensureAutheticate, (request,response) => {
+    developerRoutes.get("/getById/:developerId",ensureAutheticate, (request,response) => {
         return getDeveloperByIdFactory().handle(request,response)
     })
 //
@@ -21,6 +23,16 @@ const developerRoutes = Router()
 // update developer infos.
     developerRoutes.put("/updateInfo",ensureAutheticate, (request,response) => {
         return updateDeveloperInfoFactory().handle(request,response)
+    })
+//
+// update developer avatar.
+    developerRoutes.put("/updateAvatar",ensureAutheticate, (request,response) => {
+        return updateDeveloperAvatarFactory().handle(request,response)
+    })
+//
+// update developer skills.
+    developerRoutes.put("/updateSkills",ensureAutheticate, (request,response) => {
+        return updateDeveloperSkillsFactory().handle(request,response)
     })
 //
 
